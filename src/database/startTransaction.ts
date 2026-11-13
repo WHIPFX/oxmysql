@@ -21,7 +21,17 @@ export const startTransaction = async (
   cb?: CFXCallback,
   isPromise?: boolean,
 ) => {
-  await using conn: MySql = await getConnection();
+  let connection: MySql | undefined;
+
+  try {
+    // WHIPFX P-001: a failed getConnection (database down or restarting) answers the caller as an error
+    // instead of escaping as an unawaited rejection that leaves the caller waiting forever.
+    connection = await getConnection();
+  } catch (err: any) {
+    return logError(invokingResource, cb, isPromise, err);
+  }
+
+  await using conn = connection;
   let response: boolean | null = false;
   let closed = false;
 

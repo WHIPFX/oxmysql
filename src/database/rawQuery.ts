@@ -26,7 +26,17 @@ export const rawQuery = async (
     return logError(invokingResource, cb, isPromise, err, query, parameters);
   }
 
-  await using connection = await getConnection(connectionId);
+  let conn;
+
+  try {
+    // WHIPFX P-001: a failed getConnection (database down or restarting) answers the caller as an error
+    // instead of escaping as an unawaited rejection that leaves the caller waiting forever.
+    conn = await getConnection(connectionId);
+  } catch (err: any) {
+    return logError(invokingResource, cb, isPromise, err, query, parameters);
+  }
+
+  await using connection = conn;
 
   if (!connection) return;
 

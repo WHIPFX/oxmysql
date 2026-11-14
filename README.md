@@ -1,3 +1,9 @@
+> **This is WHIPFX's fork of oxmysql**, used by the WHIP framework. It is [overextended/oxmysql](https://github.com/overextended/oxmysql) with one change:
+>
+> - **P-001:** when no database connection is available (the database is down or restarting), `query`, `execute`, `transaction` and `startTransaction` answer the caller with an error. In upstream the failure escapes as an unawaited rejection and the caller waits for ever.
+>
+> Everything else is upstream's, and the licence is unchanged (LGPL-3.0-or-later; see `LICENSE` and `NOTICE.md`). Builds are on this repository's [releases page](https://github.com/WHIPFX/oxmysql/releases).
+
 <div align="center">
 
 # oxmysql

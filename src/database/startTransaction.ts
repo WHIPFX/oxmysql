@@ -24,7 +24,8 @@ export const startTransaction = async (
   let connection: MySql | undefined;
 
   try {
-    // WHIPFX P-001: a failed getConnection (database down or restarting) answers the caller as an error
+    //! whip P-001 patch (WHIPFX): this line is kept in the build, where WHIP's setup report counts the four of them.
+    // A failed getConnection (database down or restarting) answers the caller as an error
     // instead of escaping as an unawaited rejection that leaves the caller waiting forever.
     connection = await getConnection();
   } catch (err: any) {

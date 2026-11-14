@@ -1,8 +1,19 @@
-> **This is WHIPFX's fork of oxmysql**, used by the WHIP framework. It is [overextended/oxmysql](https://github.com/overextended/oxmysql) with one change:
+> **This is WHIPFX's fork of [oxmysql](https://github.com/overextended/oxmysql), installed by
+> [WHIP](https://github.com/WHIPFX/txAdmin-recipe).**
 >
-> - **P-001:** when no database connection is available (the database is down or restarting), `query`, `execute`, `transaction` and `startTransaction` answer the caller with an error. In upstream the failure escapes as an unawaited rejection and the caller waits for ever.
+> It's oxmysql 2.14.3 with one fix. When no database connection is available (the database is down or restarting),
+> every query call (`query`, `single`, `scalar`, `insert`, `update`, `prepare`, `rawExecute`, `transaction` and
+> `startTransaction`) answers its caller with an error at once. In upstream oxmysql the error is lost and the caller
+> waits forever. Everything else is upstream's.
 >
-> Everything else is upstream's, and the licence is unchanged (LGPL-3.0-or-later; see `LICENSE` and `NOTICE.md`). Builds are on this repository's [releases page](https://github.com/WHIPFX/oxmysql/releases).
+> - **Download:** `oxmysql.zip` from release [v2.14.3-whip.1](https://github.com/WHIPFX/oxmysql/releases/tag/v2.14.3-whip.1).
+>   Unzip it into your resources folder (WHIP's recipe uses `resources/[ox]`) and ensure it before `whip_core`. The
+>   download links further down are upstream's build, without the fix.
+> - **With WHIP:** stock oxmysql works too, but whip_core gives up on a stuck query after 65 seconds. WHIP's setup
+>   report (`whipsetup` in the server console) says which one your server runs.
+> - **License:** upstream's, unchanged: LGPL-3.0-or-later. See [LICENSE](./LICENSE) and [NOTICE.md](./NOTICE.md).
+>
+> The rest of this README is upstream's.
 
 <div align="center">
 
